@@ -65,7 +65,22 @@
           }, 3000);
         },
         (error) => {
-          info.innerText = "Konum alınamadı: " + error.message;
+          let msg = "Konum alınamadı: ";
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              msg += "Kullanıcı konum iznini reddetti.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              msg += "Konum bilgisi kullanılamıyor.";
+              break;
+            case error.TIMEOUT:
+              msg += "Konum alma süresi aşıldı.";
+              break;
+            default:
+              msg += "Bilinmeyen bir hata oluştu.";
+              break;
+          }
+          info.innerText = msg;
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
